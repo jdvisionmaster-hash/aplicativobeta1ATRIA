@@ -1,10 +1,10 @@
 # 🚀 Guía de despliegue — GitHub + Vercel
 
-Esta guía te lleva desde la carpeta en tu escritorio hasta una URL pública en
-internet. **No necesitas saber programar**; solo seguir los pasos en orden.
+Esta guía cubre dos escenarios:
+- **Primera vez:** crear el repo y conectarlo a Vercel.
+- **Actualizar:** subir cambios a un repo ya existente para que Vercel redespliegue.
 
-La app es **estática** (un solo `index.html`), así que el despliegue es directo:
-no hay que compilar nada.
+La app es **estática** (un solo `index.html`): no hay que compilar nada.
 
 ---
 
@@ -14,35 +14,54 @@ no hay que compilar nada.
 |-----------|-------------------|
 | Cuenta de GitHub | https://github.com/signup (gratis) |
 | Cuenta de Vercel | https://vercel.com/signup (gratis — entra con tu GitHub) |
-| Git instalado *(solo para la Ruta A)* | https://git-scm.com/downloads |
+| Git instalado *(solo Ruta A)* | https://git-scm.com/downloads |
 
-> 💡 Si no quieres instalar Git, salta a la **Ruta B (sin terminal)** más abajo.
+> 💡 Sin Git, salta directo a la **Ruta B (sin terminal)**.
 
 ---
 
-## 🅰️ Ruta A — Con Git (terminal)
+## 🔁 Actualizar un despliegue ya existente
 
-### Paso 1 · Crear el repositorio en GitHub
+Si ya tienes el repo en GitHub y Vercel conectado, **solo necesitas subir los
+archivos actualizados**. Vercel redespliegue automáticamente en segundos.
 
-1. Entra a https://github.com/new
-2. **Repository name:** `atria-cartas-cobranza` (o el nombre que prefieras).
-3. Visibilidad: **Private** (recomendado) o **Public**.
-4. **No** marques "Add a README" (ya tienes uno).
-5. Clic en **Create repository**. Deja esa pantalla abierta: muestra la URL del
-   repo (algo como `https://github.com/TU_USUARIO/atria-cartas-cobranza.git`).
-
-### Paso 2 · Subir la carpeta a GitHub
-
-Abre la **Terminal** y ejecuta estos comandos uno por uno.
-Primero entra a la carpeta del proyecto:
+### Con Git (terminal)
 
 ```bash
 cd ~/Desktop/"aplicativo Atria beta"
+git add .
+git commit -m "Actualización: dictado voz, limpiar archivo, descarga ZIP"
+git push
 ```
 
-Inicializa Git y sube todo:
+Vercel detecta el `push` y publica la nueva versión sin que hagas nada más.
+
+### Sin terminal (desde el navegador)
+
+1. Abre tu repositorio en GitHub.
+2. Haz clic en el archivo que quieres actualizar (p. ej. `index.html`).
+3. Pulsa el ✏️ (lápiz) para editarlo, o usa el botón **"Add file → Upload files"**
+   para reemplazar varios archivos a la vez arrastrándolos.
+4. Al guardar, pulsa **Commit changes** → Vercel redespliegue automáticamente.
+
+---
+
+## 🆕 Primera vez — Crear repo y conectar a Vercel
+
+### 🅰️ Ruta A — Con Git (terminal)
+
+#### Paso 1 · Crear el repositorio en GitHub
+
+1. Abre https://github.com/new
+2. **Repository name:** `atria-cartas-cobranza` (sin espacios).
+3. Visibilidad: **Private** (recomendado) o **Public**.
+4. **No** marques "Add a README" (ya tienes uno).
+5. Pulsa **Create repository** y deja esa pantalla abierta (muestra la URL del repo).
+
+#### Paso 2 · Subir la carpeta desde Terminal
 
 ```bash
+cd ~/Desktop/"aplicativo Atria beta"
 git init
 git add .
 git commit -m "Beta inicial: generador de cartas de cobranza Atria"
@@ -52,73 +71,54 @@ git push -u origin main
 ```
 
 > 🔑 Cambia `TU_USUARIO` por tu usuario real de GitHub.
-> Si te pide usuario/contraseña, usa tu usuario y un **Personal Access Token**
-> (GitHub ya no acepta contraseña normal): créalo en
-> https://github.com/settings/tokens → *Generate new token (classic)* → marca
-> el permiso `repo`.
+> Si te pide contraseña: GitHub ya no acepta contraseña normal. Crea un
+> **Personal Access Token** en https://github.com/settings/tokens →
+> *Generate new token (classic)* → marca el permiso `repo` → copia el token
+> y úsalo como contraseña.
 
-Recarga la página del repo en GitHub: ya deberías ver tus archivos.
+Recarga el repo en GitHub — deberías ver todos los archivos.
 
-### Paso 3 · Conectar el repo a Vercel
+#### Paso 3 · Conectar a Vercel
 
-1. Entra a https://vercel.com y haz login con **GitHub**.
-2. Botón **Add New…** → **Project**.
-3. En la lista, busca `atria-cartas-cobranza` y pulsa **Import**.
-   *(Si no aparece, pulsa "Adjust GitHub App Permissions" y dale acceso al repo.)*
-4. Configuración del proyecto:
+1. Entra a https://vercel.com → login con GitHub.
+2. Pulsa **Add New… → Project**.
+3. Busca `atria-cartas-cobranza` y pulsa **Import**.
+   *(Si no aparece: pulsa "Adjust GitHub App Permissions" y autoriza el repo.)*
+4. Configura así:
    - **Framework Preset:** `Other`
-   - **Root Directory:** `./` (déjalo por defecto)
-   - **Build Command:** *(vacío — no hace falta)*
-   - **Output Directory:** *(vacío)*
-5. Pulsa **Deploy** y espera ~20 segundos.
-6. 🎉 Vercel te da una URL como `https://atria-cartas-cobranza.vercel.app`.
+   - **Root Directory:** `./` (dejar por defecto)
+   - **Build Command:** *(dejar vacío)*
+   - **Output Directory:** *(dejar vacío)*
+5. Pulsa **Deploy** → espera ~20 segundos.
+6. 🎉 Recibes una URL pública como `https://atria-cartas-cobranza.vercel.app`.
 
 ---
 
-## 🅱️ Ruta B — Sin terminal (todo desde el navegador)
+### 🅱️ Ruta B — Sin terminal (todo desde el navegador)
 
-Ideal si no quieres instalar Git.
+#### Paso 1 · Subir archivos a GitHub
 
-### Paso 1 · Subir archivos a GitHub por la web
+1. Abre https://github.com/new y crea el repo (igual que Ruta A, Paso 1).
+2. En la pantalla del repo vacío, pulsa **"uploading an existing file"**.
+3. Arrastra los 5 archivos de la carpeta `aplicativo Atria beta`:
+   - `index.html`
+   - `vercel.json`
+   - `README.md`
+   - `DESPLIEGUE.md`
+   - `.gitignore`
+4. Pulsa **Commit changes**.
 
-1. Entra a https://github.com/new y crea el repo (igual que en la Ruta A, Paso 1).
-2. En la pantalla del repo vacío, pulsa el enlace **"uploading an existing file"**.
-3. Arrastra **todos** los archivos de la carpeta `aplicativo Atria beta`
-   (`index.html`, `vercel.json`, `README.md`, `DESPLIEGUE.md`, `.gitignore`).
-4. Abajo pulsa **Commit changes**.
+#### Paso 2 · Conectar a Vercel
 
-### Paso 2 · Importar en Vercel
-
-Igual que la **Ruta A, Paso 3**.
-
----
-
-## 🔁 Cómo publicar cambios después
-
-Cada vez que actualices algo (por ejemplo el texto de la carta):
-
-**Con Git (Ruta A):**
-```bash
-cd ~/Desktop/"aplicativo Atria beta"
-git add .
-git commit -m "Describe aquí tu cambio"
-git push
-```
-
-**Sin terminal (Ruta B):** entra al repo en GitHub → abre el archivo → ✏️ (editar)
-→ guarda con *Commit changes*, o vuelve a subir el archivo.
-
-> ⚡ **Despliegue automático:** Vercel detecta cada `push`/cambio en GitHub y
-> vuelve a publicar solo. No tienes que hacer nada más; en segundos tu URL
-> muestra la versión nueva.
+Igual que **Ruta A, Paso 3**.
 
 ---
 
 ## 🌐 (Opcional) Dominio propio
 
-En Vercel: abre tu proyecto → **Settings → Domains → Add** y escribe tu dominio
-(p. ej. `atria.tudominio.com`). Vercel te indica los registros DNS que debes
-crear en tu proveedor de dominio.
+En Vercel: abre tu proyecto → **Settings → Domains → Add** → escribe tu dominio
+(p. ej. `atria.tuempresa.com`). Vercel indica los registros DNS que debes crear
+en tu proveedor de dominio.
 
 ---
 
@@ -126,18 +126,24 @@ crear en tu proveedor de dominio.
 
 | Síntoma | Causa probable | Solución |
 |---------|----------------|----------|
-| La página se ve en blanco | Vercel no encontró `index.html` en la raíz | Asegúrate de que `index.html` esté en la raíz del repo, no dentro de otra carpeta |
-| El repo no aparece en Vercel | Falta dar permiso a la GitHub App | En Vercel → "Adjust GitHub App Permissions" y autoriza el repo |
-| `git push` pide contraseña y falla | GitHub ya no acepta contraseña | Usa un **Personal Access Token** (ver Paso 2 de la Ruta A) |
-| Cambios no se reflejan | El navegador tiene caché | Recarga con `Cmd+Shift+R` (macOS) |
-| El PDF sale con el formulario | Imprimiste la página entera | Usa el botón **Descargar PDF**; el CSS de impresión ya oculta el formulario |
+| La página se ve en blanco | `index.html` no está en la raíz del repo | Verifica que el archivo esté directamente en la raíz, no dentro de una subcarpeta |
+| El repo no aparece en Vercel | Falta permiso a la GitHub App | Vercel → "Adjust GitHub App Permissions" → autoriza el repo |
+| `git push` pide contraseña y falla | GitHub ya no acepta contraseña | Usa un Personal Access Token (ver Paso 2, Ruta A) |
+| Cambios publicados pero no se ven | Caché del navegador | Recarga con `Cmd+Shift+R` (macOS) |
+| El PDF no se descarga | jsPDF no cargó (sin internet) | Verifica conexión; en Vercel/producción no ocurre |
+| El .zip no se descarga | JSZip no cargó (sin internet) | Ídem; recarga la página con conexión activa |
+| El dictado por voz no funciona | Navegador no compatible | Usa Chrome o Edge; Safari no soporta Web Speech API |
+| El dictado pide permiso en cada campo | Instancia de reconocimiento duplicada | Esto está corregido en la versión actual; recarga la página |
+| No puedo cambiar el archivo Excel | Falta el botón "Quitar archivo" | Está en la versión actual; si no aparece, recarga la página |
 
 ---
 
-## ✅ Checklist final
+## ✅ Checklist de primer despliegue
 
-- [ ] Repo creado en GitHub con los 5 archivos.
-- [ ] Proyecto importado en Vercel (Framework: *Other*).
-- [ ] Deploy exitoso y URL pública funcionando.
-- [ ] Probado: llenar formulario → vista previa → descargar PDF.
+- [ ] Repo creado en GitHub con los 5 archivos (`index.html`, `vercel.json`, `README.md`, `DESPLIEGUE.md`, `.gitignore`).
+- [ ] Proyecto importado en Vercel (Framework: *Other*, sin build command).
+- [ ] Deploy exitoso → URL pública funcionando.
+- [ ] Probado en la URL de Vercel: Individual → llenar → PDF descargado.
+- [ ] Probado: Base de datos → subir CSV/Excel → descargar ZIP.
+- [ ] Probado: dictado por voz (Chrome/Edge) — permiso pedido una sola vez.
 - [ ] (Opcional) Dominio propio configurado.

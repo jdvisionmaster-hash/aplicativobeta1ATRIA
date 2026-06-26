@@ -15,106 +15,85 @@
     --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
   }
   *{box-sizing:border-box}
-  body{
-    margin:0;
-    font-family:var(--sans);
-    color:var(--texto);
-    background:#e9ecf1;
-  }
+  body{margin:0;font-family:var(--sans);color:var(--texto);background:#e9ecf1}
   .barra{
-    background:var(--azul);
-    color:#fff;
-    padding:14px 24px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    flex-wrap:wrap;
-    gap:8px;
+    background:var(--azul);color:#fff;padding:14px 24px;
+    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;
   }
   .barra h1{font-size:18px;margin:0;font-weight:600}
-  .barra .beta{
-    font-size:11px;background:#ffb020;color:#3a2a00;
-    padding:2px 8px;border-radius:10px;font-weight:700;letter-spacing:.5px;
+  .barra .beta{font-size:11px;background:#ffb020;color:#3a2a00;padding:2px 8px;border-radius:10px;font-weight:700;letter-spacing:.5px}
+
+  /* ---------- Pestañas ---------- */
+  .tabs{display:flex;gap:4px;padding:0 24px;background:#dfe4ea;border-bottom:1px solid var(--borde)}
+  .tab{
+    padding:13px 22px;cursor:pointer;border:none;background:transparent;
+    font-weight:600;font-size:14px;color:#5a6473;border-bottom:3px solid transparent;
+    flex:none;font-family:var(--sans);
   }
-  .layout{
-    display:grid;
-    grid-template-columns:380px 1fr;
-    gap:24px;
-    padding:24px;
-    align-items:start;
-  }
-  /* ---------- Formulario ---------- */
-  .panel{
-    background:#fff;
-    border:1px solid var(--borde);
-    border-radius:10px;
-    padding:20px;
-  }
+  .tab:hover{color:var(--azul)}
+  .tab.active{color:var(--azul);border-bottom-color:var(--azul);background:#e9ecf1}
+  .tab-panel{display:none}
+  .tab-panel.active{display:block}
+
+  .layout{display:grid;grid-template-columns:380px 1fr;gap:24px;padding:24px;align-items:start}
+
+  /* ---------- Paneles ---------- */
+  .panel{background:#fff;border:1px solid var(--borde);border-radius:10px;padding:20px}
   .panel h2{
-    font-size:13px;
-    text-transform:uppercase;
-    letter-spacing:.6px;
-    color:var(--azul-claro);
-    margin:0 0 12px;
-    border-bottom:2px solid var(--gris);
-    padding-bottom:6px;
+    font-size:13px;text-transform:uppercase;letter-spacing:.6px;color:var(--azul-claro);
+    margin:0 0 12px;border-bottom:2px solid var(--gris);padding-bottom:6px;
   }
-  fieldset{
-    border:none;margin:0 0 18px;padding:0;
-  }
+  fieldset{border:none;margin:0 0 18px;padding:0}
   fieldset legend{
-    font-size:12px;font-weight:700;color:var(--azul);
-    text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;
-    width:100%;border-bottom:1px solid var(--borde);padding-bottom:5px;
+    font-size:12px;font-weight:700;color:var(--azul);text-transform:uppercase;letter-spacing:.5px;
+    margin-bottom:10px;width:100%;border-bottom:1px solid var(--borde);padding-bottom:5px;
   }
   .campo{margin-bottom:12px}
   .campo label{display:block;font-size:12px;font-weight:600;margin-bottom:4px;color:#4a5160}
   .campo input{
-    width:100%;padding:9px 10px;font-size:14px;
-    border:1px solid var(--borde);border-radius:6px;font-family:var(--sans);
-    transition:border-color .15s,box-shadow .15s;
+    width:100%;padding:9px 10px;font-size:14px;border:1px solid var(--borde);border-radius:6px;
+    font-family:var(--sans);transition:border-color .15s,box-shadow .15s;
   }
-  .campo input:focus{
-    outline:none;border-color:var(--azul-claro);
-    box-shadow:0 0 0 3px rgba(44,82,130,.15);
-  }
+  .campo input:focus{outline:none;border-color:var(--azul-claro);box-shadow:0 0 0 3px rgba(44,82,130,.15)}
   .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  .acciones{display:flex;gap:10px;margin-top:8px}
+  .acciones{display:flex;gap:10px;margin-top:8px;flex-wrap:wrap}
   button{
-    flex:1;padding:11px;font-size:14px;font-weight:600;
-    border:none;border-radius:6px;cursor:pointer;font-family:var(--sans);
-    transition:background .15s,opacity .15s;
+    flex:1;padding:11px;font-size:14px;font-weight:600;border:none;border-radius:6px;cursor:pointer;
+    font-family:var(--sans);transition:background .15s,opacity .15s;
   }
   .btn-pdf{background:var(--azul);color:#fff}
   .btn-pdf:hover{background:var(--azul-claro)}
+  .btn-pdf:disabled{opacity:.55;cursor:default}
   .btn-limpiar{background:#fff;color:#c0392b;border:1px solid #e3b8b3}
   .btn-limpiar:hover{background:#fdf0ef}
+  .btn-sec{background:#eef2f7;color:var(--azul);border:1px solid var(--borde);flex:none;padding:9px 14px}
+  .btn-sec:hover{background:#e1e8f0}
   .ayuda{font-size:11px;color:#8a93a2;margin-top:14px;line-height:1.5}
+  .nota-voz{font-size:11px;color:#8a93a2;margin:0 0 14px;line-height:1.5}
+
+  /* ---------- Micrófono / voz ---------- */
+  .input-voz{position:relative}
+  .input-voz input{padding-right:40px}
+  .mic{
+    position:absolute;right:4px;top:50%;transform:translateY(-50%);
+    width:30px;height:30px;flex:none;padding:0;background:#eef2f7;border:1px solid var(--borde);
+    border-radius:6px;font-size:14px;line-height:1;cursor:pointer;
+  }
+  .mic:hover{background:#e1e8f0}
+  .mic.listening{background:#fde8e8;border-color:#e57373;animation:pulse 1s infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(229,57,53,.45)}50%{box-shadow:0 0 0 5px rgba(229,57,53,0)}}
+
   /* ---------- Vista previa / Documento ---------- */
-  .preview-wrap{
-    display:flex;justify-content:center;
-  }
+  .preview-wrap{display:flex;justify-content:center}
   .documento{
-    background:#fff;
-    width:100%;
-    max-width:794px;            /* ~A4 a 96dpi */
-    min-height:1123px;
-    padding:64px 72px;
-    box-shadow:0 4px 24px rgba(0,0,0,.12);
-    font-family:var(--serif);
-    font-size:15px;
-    line-height:1.7;
-    color:#1a1a1a;
+    background:#fff;width:100%;max-width:794px;min-height:1123px;padding:64px 72px;
+    box-shadow:0 4px 24px rgba(0,0,0,.12);font-family:var(--serif);font-size:15px;line-height:1.7;color:#1a1a1a;
   }
-  .doc-membrete{
-    text-align:right;border-bottom:2px solid var(--azul);
-    padding-bottom:10px;margin-bottom:28px;
-  }
+  .doc-membrete{text-align:right;border-bottom:2px solid var(--azul);padding-bottom:10px;margin-bottom:28px}
   .doc-membrete .emp{font-size:20px;font-weight:bold;color:var(--azul);font-family:var(--sans)}
   .doc-membrete .sub{font-size:12px;color:#555;font-family:var(--sans)}
   .doc-fecha{margin-bottom:24px}
   .doc-dest{margin-bottom:20px}
-  .doc-dest strong{font-weight:bold}
   .doc-asunto{margin-bottom:20px;font-weight:bold}
   .doc-cuerpo p{margin:0 0 16px}
   .doc-firma{margin-top:48px}
@@ -123,19 +102,35 @@
   .doc-firma .cargo{font-size:13px;color:#555}
   .doc-firma .ent{font-size:13px;color:#555;margin-top:2px;font-family:var(--sans)}
   .val-vacio{color:#b9bfca;font-style:italic}
-  /* ---------- Impresión / PDF ---------- */
+
+  /* ---------- Masivo ---------- */
+  .masivo-wrap{max-width:920px;margin:0 auto;padding:24px;display:flex;flex-direction:column;gap:20px}
+  .pasos{margin:0;padding-left:20px}
+  .pasos li{margin-bottom:14px;line-height:1.6}
+  .pasos li > div{margin-top:8px}
+  input[type=file]{font-size:13px}
+  .resumen{margin:14px 0;font-size:14px}
+  .badge{display:inline-block;padding:2px 9px;border-radius:10px;font-size:12px;font-weight:700;margin-right:6px}
+  .badge-ok{background:#e3f4e8;color:#1f7a3d}
+  .badge-warn{background:#fdeed6;color:#9a6400}
+  .tabla{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+  .tabla th,.tabla td{border:1px solid var(--borde);padding:7px 9px;text-align:left}
+  .tabla th{background:var(--gris);color:var(--azul);font-size:12px}
+  .tabla tr.fila-mala td{background:#fdf3f2}
+  .tabla td .mini{padding:5px 9px;font-size:12px;flex:none}
+  details.panel summary{cursor:pointer;font-weight:600;color:var(--azul)}
+  details.panel[open] summary{margin-bottom:10px}
+  .cols-lista{font-size:13px;line-height:1.7;color:#444}
+  .cols-lista code{background:var(--gris);padding:1px 6px;border-radius:4px}
+  .progreso{font-size:13px;color:var(--azul-claro);margin-top:10px;font-weight:600}
+
+  /* ---------- Impresión ---------- */
   @page{size:A4;margin:18mm}
   @media print{
-    body{background:#fff}
-    .barra,.col-form,.ayuda{display:none !important}
+    .barra,.tabs,.col-form,.ayuda{display:none !important}
     .layout{display:block;padding:0}
-    .preview-wrap{display:block}
-    .documento{
-      box-shadow:none;max-width:none;width:100%;
-      min-height:0;padding:0;
-    }
+    .documento{box-shadow:none;max-width:none;width:100%;min-height:0;padding:0}
   }
-  /* ---------- Responsive ---------- */
   @media (max-width:900px){
     .layout{grid-template-columns:1fr}
     .documento{padding:40px 32px;min-height:0}
@@ -148,240 +143,619 @@
     <span class="beta">BETA</span>
   </div>
 
-  <div class="layout">
-    <!-- ================= FORMULARIO ================= -->
-    <div class="col-form">
-      <div class="panel">
-        <h2>Datos del documento</h2>
-        <form id="form" autocomplete="off">
-          <fieldset>
-            <legend>Entidad / Acreedor</legend>
-            <div class="campo">
-              <label for="empresa">Nombre de la empresa</label>
-              <input type="text" id="empresa" placeholder="Ej. Cobranzas del Valle S.A.S.">
-            </div>
-            <div class="row">
-              <div class="campo">
-                <label for="nit">NIT</label>
-                <input type="text" id="nit" placeholder="900.123.456-7">
-              </div>
-              <div class="campo">
-                <label for="telefono">Teléfono</label>
-                <input type="text" id="telefono" placeholder="(602) 555 1234">
-              </div>
-            </div>
-            <div class="campo">
-              <label for="direccion">Dirección</label>
-              <input type="text" id="direccion" placeholder="Calle 10 # 5-25, Oficina 301">
-            </div>
-            <div class="campo">
-              <label for="ciudad">Ciudad de emisión</label>
-              <input type="text" id="ciudad" placeholder="Cali">
-            </div>
-          </fieldset>
+  <div class="tabs">
+    <button class="tab active" data-tab="individual">📝 Individual</button>
+    <button class="tab" data-tab="masivo">📊 Base de datos (masivo)</button>
+  </div>
 
-          <fieldset>
-            <legend>Deudor</legend>
-            <div class="campo">
-              <label for="nombre_deudor">Nombre completo</label>
-              <input type="text" id="nombre_deudor" placeholder="Juan Pérez Gómez">
-            </div>
-            <div class="campo">
-              <label for="cedula">Número de cédula</label>
-              <input type="text" id="cedula" placeholder="1.234.567.890">
-            </div>
-          </fieldset>
-
-          <fieldset>
-            <legend>Obligación</legend>
-            <div class="campo">
-              <label for="num_obligacion">No. de obligación / referencia</label>
-              <input type="text" id="num_obligacion" placeholder="OBL-2026-0048">
-            </div>
-            <div class="row">
-              <div class="campo">
-                <label for="monto">Monto de la deuda (COP)</label>
-                <input type="number" id="monto" min="0" step="1000" placeholder="1250000">
+  <!-- ============================================================= -->
+  <!-- ====================  PESTAÑA INDIVIDUAL  ==================== -->
+  <!-- ============================================================= -->
+  <div class="tab-panel active" id="panel-individual">
+    <div class="layout">
+      <div class="col-form">
+        <div class="panel">
+          <h2>Datos del documento</h2>
+          <p class="nota-voz">🎤 Pulsa el micrófono de cada campo para dictar. Los nombres de personas y ciudades se corrigen con mayúsculas automáticamente.</p>
+          <form id="form" autocomplete="off">
+            <fieldset>
+              <legend>Entidad / Acreedor</legend>
+              <div class="campo"><label for="empresa">Nombre de la empresa</label><input type="text" id="empresa" placeholder="Ej. Cobranzas del Valle S.A.S."></div>
+              <div class="row">
+                <div class="campo"><label for="nit">NIT</label><input type="text" id="nit" placeholder="900.123.456-7"></div>
+                <div class="campo"><label for="telefono">Teléfono</label><input type="text" id="telefono" placeholder="(602) 555 1234"></div>
               </div>
-              <div class="campo">
-                <label for="dias_mora">Días en mora</label>
-                <input type="number" id="dias_mora" min="0" step="1" placeholder="45">
+              <div class="campo"><label for="direccion">Dirección</label><input type="text" id="direccion" placeholder="Calle 10 # 5-25, Oficina 301"></div>
+              <div class="campo"><label for="ciudad">Ciudad de emisión</label><input type="text" id="ciudad" placeholder="Cali"></div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Deudor</legend>
+              <div class="campo"><label for="nombre_deudor">Nombre completo</label><input type="text" id="nombre_deudor" placeholder="Juan Pérez Gómez"></div>
+              <div class="campo"><label for="cedula">Número de cédula</label><input type="text" id="cedula" placeholder="1.234.567.890"></div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Obligación</legend>
+              <div class="campo"><label for="num_obligacion">No. de obligación / referencia</label><input type="text" id="num_obligacion" placeholder="OBL-2026-0048"></div>
+              <div class="row">
+                <div class="campo"><label for="monto">Monto de la deuda (COP)</label><input type="number" id="monto" min="0" step="1000" placeholder="1250000"></div>
+                <div class="campo"><label for="dias_mora">Días en mora</label><input type="number" id="dias_mora" min="0" step="1" placeholder="45"></div>
               </div>
-            </div>
-            <div class="campo">
-              <label for="fecha_limite">Fecha límite de pago</label>
-              <input type="date" id="fecha_limite">
-            </div>
-            <div class="campo">
-              <label for="fecha_actual">Fecha de la carta</label>
-              <input type="date" id="fecha_actual">
-            </div>
-          </fieldset>
+              <div class="campo"><label for="fecha_limite">Fecha límite de pago</label><input type="date" id="fecha_limite"></div>
+              <div class="campo"><label for="fecha_actual">Fecha de la carta</label><input type="date" id="fecha_actual"></div>
+            </fieldset>
 
-          <fieldset>
-            <legend>Firmante</legend>
-            <div class="campo">
-              <label for="firmante_nombre">Nombre</label>
-              <input type="text" id="firmante_nombre" placeholder="María López">
-            </div>
-            <div class="campo">
-              <label for="firmante_cargo">Cargo</label>
-              <input type="text" id="firmante_cargo" placeholder="Coordinadora de Cartera">
-            </div>
-          </fieldset>
+            <fieldset>
+              <legend>Firmante</legend>
+              <div class="campo"><label for="firmante_nombre">Nombre</label><input type="text" id="firmante_nombre" placeholder="María López"></div>
+              <div class="campo"><label for="firmante_cargo">Cargo</label><input type="text" id="firmante_cargo" placeholder="Coordinadora de Cartera"></div>
+            </fieldset>
 
-          <div class="acciones">
-            <button type="button" class="btn-pdf" id="btnPdf">⬇ Descargar PDF</button>
-            <button type="button" class="btn-limpiar" id="btnLimpiar">Limpiar</button>
-          </div>
-          <p class="ayuda">
-            En el diálogo de impresión elige <strong>“Guardar como PDF”</strong> como destino.
-            Tus datos se guardan automáticamente en este navegador.
-          </p>
-        </form>
+            <div class="acciones">
+              <button type="button" class="btn-pdf" id="btnPdf">⬇ Descargar PDF</button>
+              <button type="button" class="btn-limpiar" id="btnLimpiar">Limpiar</button>
+            </div>
+            <p class="ayuda">El PDF se genera directamente (vector, texto seleccionable). Tus datos se guardan en este navegador.</p>
+          </form>
+        </div>
       </div>
-    </div>
 
-    <!-- ================= VISTA PREVIA ================= -->
-    <div class="preview-wrap">
-      <div class="documento" id="documento">
-        <div class="doc-membrete">
-          <div class="emp" data-var="empresa">Nombre de la empresa</div>
-          <div class="sub">NIT <span data-var="nit">———</span> · Tel. <span data-var="telefono">———</span></div>
-          <div class="sub" data-var="direccion">Dirección</div>
-        </div>
-
-        <div class="doc-fecha"><span data-var="ciudad">Ciudad</span>, <span data-var="fecha_actual">———</span></div>
-
-        <div class="doc-dest">
-          Señor(a)<br>
-          <strong data-var="nombre_deudor">Nombre del deudor</strong><br>
-          C.C. No. <span data-var="cedula">———</span>
-        </div>
-
-        <div class="doc-asunto">Asunto: Requerimiento de pago — Obligación No. <span data-var="num_obligacion">———</span></div>
-
-        <div class="doc-cuerpo">
-          <p>Reciba un cordial saludo. Por medio de la presente nos permitimos informarle
-          que, a la fecha, usted registra una obligación pendiente con
-          <span data-var="empresa">la entidad</span> por valor de
-          <strong data-var="monto">$ ———</strong>, la cual presenta una mora de
-          <strong data-var="dias_mora">———</strong> días.</p>
-
-          <p>Le solicitamos realizar el pago total de la suma adeudada a más tardar el
-          <strong data-var="fecha_limite">———</strong>, con el fin de evitar el reporte ante
-          centrales de riesgo y/o el inicio de acciones de cobro adicionales.</p>
-
-          <p>En caso de haber realizado el pago, por favor hacer caso omiso a esta comunicación.</p>
-
-          <p>Atentamente,</p>
-        </div>
-
-        <div class="doc-firma">
-          <div class="linea">
+      <div class="preview-wrap">
+        <div class="documento" id="documento">
+          <div class="doc-membrete">
+            <div class="emp" data-var="empresa">Nombre de la empresa</div>
+            <div class="sub">NIT <span data-var="nit">———</span> · Tel. <span data-var="telefono">———</span></div>
+            <div class="sub" data-var="direccion">Dirección</div>
+          </div>
+          <div class="doc-fecha"><span data-var="ciudad">Ciudad</span>, <span data-var="fecha_actual">———</span></div>
+          <div class="doc-dest">Señor(a)<br><strong data-var="nombre_deudor">Nombre del deudor</strong><br>C.C. No. <span data-var="cedula">———</span></div>
+          <div class="doc-asunto">Asunto: Requerimiento de pago — Obligación No. <span data-var="num_obligacion">———</span></div>
+          <div class="doc-cuerpo">
+            <p>Reciba un cordial saludo. Por medio de la presente nos permitimos informarle que, a la fecha, usted registra una obligación pendiente con <span data-var="empresa">la entidad</span> por valor de <strong data-var="monto">$———</strong>, la cual presenta una mora de <strong data-var="dias_mora">———</strong> días.</p>
+            <p>Le solicitamos realizar el pago total de la suma adeudada a más tardar el <strong data-var="fecha_limite">———</strong>, con el fin de evitar el reporte ante centrales de riesgo y/o el inicio de acciones de cobro adicionales.</p>
+            <p>En caso de haber realizado el pago, por favor hacer caso omiso a esta comunicación.</p>
+            <p>Atentamente,</p>
+          </div>
+          <div class="doc-firma"><div class="linea">
             <div class="nom" data-var="firmante_nombre">Nombre del firmante</div>
             <div class="cargo" data-var="firmante_cargo">Cargo</div>
             <div class="ent"><span data-var="empresa">Empresa</span> — NIT <span data-var="nit">———</span></div>
-          </div>
+          </div></div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- ============================================================= -->
+  <!-- =====================  PESTAÑA MASIVO  ======================= -->
+  <!-- ============================================================= -->
+  <div class="tab-panel" id="panel-masivo">
+    <div class="masivo-wrap">
+      <div class="panel">
+        <h2>Carga masiva desde Excel</h2>
+        <ol class="pasos">
+          <li><strong>Descarga la plantilla</strong> y llénala con tus deudores (una fila por persona).
+            <div><button type="button" class="btn-sec" id="btnPlantilla">⬇ Descargar plantilla Excel</button></div></li>
+          <li><strong>Sube tu archivo</strong> con la base de datos (.xlsx, .xls o .csv).
+            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:6px">
+              <input type="file" id="archivo" accept=".xlsx,.xls,.csv">
+              <button type="button" class="btn-limpiar" id="btnLimpiarArchivo" style="display:none;flex:none;padding:7px 14px;font-size:13px">🗑 Quitar archivo</button>
+            </div></li>
+          <li><strong>Revisa</strong> los registros cargados y <strong>descarga todos los PDF</strong> en un único .zip (un PDF por persona).</li>
+        </ol>
+        <p class="ayuda">💡 Las columnas de la entidad y del firmante que dejes vacías en el Excel se completarán con lo que tengas escrito en la pestaña <em>Individual</em> (sirven como valores por defecto para todos).</p>
+
+        <div id="resumen" class="resumen"></div>
+        <div class="acciones" id="accionesMasivo" style="display:none">
+          <button type="button" class="btn-pdf" id="btnZip">⬇ Descargar todos los PDF (.zip)</button>
+        </div>
+        <div id="progreso" class="progreso"></div>
+        <div id="tablaWrap"></div>
+      </div>
+
+      <details class="panel">
+        <summary>Columnas aceptadas en el Excel</summary>
+        <div class="cols-lista">
+          <p>El encabezado de la primera fila puede usar cualquiera de estos nombres (sin importar tildes ni mayúsculas):</p>
+          <ul>
+            <li><code>Empresa</code>, <code>NIT</code>, <code>Telefono</code>, <code>Direccion</code>, <code>Ciudad</code></li>
+            <li><code>Nombre del deudor</code> (o <code>Nombre</code>), <code>Cedula</code> (o <code>Documento</code>)</li>
+            <li><code>No Obligacion</code> (o <code>Referencia</code>), <code>Monto</code> (o <code>Valor</code>), <code>Dias en mora</code> (o <code>Mora</code>)</li>
+            <li><code>Fecha limite</code>, <code>Fecha carta</code></li>
+            <li><code>Firmante</code>, <code>Cargo</code></li>
+          </ul>
+          <p>Las fechas pueden ir como fecha de Excel o como texto <code>AAAA-MM-DD</code> / <code>DD/MM/AAAA</code>. El único campo obligatorio es el <strong>nombre del deudor</strong>.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- Librerías (se cargan desde CDN; requieren internet para el modo masivo y la descarga de PDF) -->
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+
 <script>
 (function(){
   "use strict";
-  var STORAGE_KEY = "cartaCobranzaBeta_v1";
-  var campos = ["empresa","nit","telefono","direccion","ciudad",
-                "nombre_deudor","cedula","num_obligacion","monto","dias_mora",
-                "fecha_limite","fecha_actual","firmante_nombre","firmante_cargo"];
 
-  var fmtMoneda = new Intl.NumberFormat('es-CO',{style:'currency',currency:'COP',maximumFractionDigits:0});
+  /* ===================== Utilidades ===================== */
+  var CAMPOS = ["empresa","nit","telefono","direccion","ciudad","nombre_deudor","cedula",
+                "num_obligacion","monto","dias_mora","fecha_limite","fecha_actual",
+                "firmante_nombre","firmante_cargo"];
+  var STORAGE_KEY = "atriaCartaCobranza_v2";
+  var MINOR = ["de","del","la","las","los","y","e","o","u","da","do","en","el"];
 
-  function formatearFechaLarga(iso){
-    if(!iso) return "";
-    // iso = "YYYY-MM-DD" -> evitar desfase de zona horaria usando UTC
-    var p = iso.split("-");
-    if(p.length!==3) return iso;
-    var d = new Date(Date.UTC(+p[0], +p[1]-1, +p[2]));
-    return d.toLocaleDateString('es-CO',{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'});
+  function pad(n){ return String(n).padStart(2,"0"); }
+  function hoyISO(){ var h=new Date(); return h.getFullYear()+"-"+pad(h.getMonth()+1)+"-"+pad(h.getDate()); }
+  function capFirst(s){ s=String(s||"").trim(); return s ? s.charAt(0).toUpperCase()+s.slice(1) : s; }
+
+  function tituloPropio(s){
+    s = String(s||"").toLowerCase().replace(/\s+/g," ").trim();
+    if(!s) return s;
+    return s.split(" ").map(function(w,i){
+      if(i>0 && MINOR.indexOf(w)>=0) return w;
+      return w.charAt(0).toUpperCase()+w.slice(1);
+    }).join(" ");
   }
 
+  function fmtMoneda(raw){
+    if(raw==="" || raw==null) return "$———";
+    var n = parseInt(String(raw).replace(/[^\d]/g,""),10);
+    if(isNaN(n)) return String(raw);
+    return "$" + n.toLocaleString("es-CO",{maximumFractionDigits:0});
+  }
+  function soloDigitos(raw){
+    if(raw===""||raw==null) return "";
+    var s = String(raw).replace(/[^\d]/g,"");
+    return s;
+  }
+
+  function toISO(v){
+    if(v==null || v==="") return "";
+    if(v instanceof Date) return v.getFullYear()+"-"+pad(v.getMonth()+1)+"-"+pad(v.getDate());
+    var s = String(v).trim(), m;
+    m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/); if(m) return m[1]+"-"+pad(m[2])+"-"+pad(m[3]);
+    m = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
+    if(m){ var yy = m[3].length===2 ? "20"+m[3] : m[3]; return yy+"-"+pad(m[2])+"-"+pad(m[1]); }
+    return s;
+  }
+  function fmtFechaLarga(v){
+    var iso = toISO(v);
+    var m = iso.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if(!m) return iso || "———";
+    var d = new Date(Date.UTC(+m[1], +m[2]-1, +m[3]));
+    return d.toLocaleDateString("es-CO",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"});
+  }
+  function slug(s){
+    s = String(s||"").normalize("NFD").replace(/[̀-ͯ]/g,"")
+         .replace(/[^a-zA-Z0-9]+/g,"_").replace(/^_+|_+$/g,"");
+    return s || "documento";
+  }
+  function descargarBlob(blob, nombre){
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url; a.download = nombre;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 4000);
+  }
+
+  /* ===================== Pestañas ===================== */
+  document.querySelectorAll(".tab").forEach(function(t){
+    t.addEventListener("click", function(){
+      document.querySelectorAll(".tab").forEach(function(x){ x.classList.remove("active"); });
+      document.querySelectorAll(".tab-panel").forEach(function(p){ p.classList.remove("active"); });
+      t.classList.add("active");
+      document.getElementById("panel-"+t.getAttribute("data-tab")).classList.add("active");
+    });
+  });
+
+  /* ===================== Datos del formulario ===================== */
+  function datosFormulario(){
+    var d = {};
+    CAMPOS.forEach(function(id){ d[id] = document.getElementById(id).value; });
+    return d;
+  }
+
+  /* ===================== Vista previa en vivo ===================== */
   function valorMostrado(id, raw){
-    if(raw === "" || raw == null) return null;       // null => placeholder
-    if(id === "monto"){
-      var n = Number(raw);
-      return isNaN(n) ? raw : fmtMoneda.format(n);
-    }
-    if(id === "fecha_limite" || id === "fecha_actual"){
-      return formatearFechaLarga(raw);
-    }
+    if(raw==="" || raw==null) return null;
+    if(id==="monto") return fmtMoneda(raw);
+    if(id==="fecha_limite" || id==="fecha_actual") return fmtFechaLarga(raw);
     return raw;
   }
-
   function pintar(id){
     var input = document.getElementById(id);
     var mostrado = valorMostrado(id, input.value);
-    var nodos = document.querySelectorAll('[data-var="'+id+'"]');
-    for(var i=0;i<nodos.length;i++){
-      var n = nodos[i];
-      if(mostrado === null){
-        n.textContent = n.getAttribute('data-placeholder') || n.textContent;
-        n.classList.add('val-vacio');
+    document.querySelectorAll('[data-var="'+id+'"]').forEach(function(n){
+      if(mostrado===null){
+        n.textContent = n.getAttribute("data-placeholder") || n.textContent;
+        n.classList.add("val-vacio");
       }else{
-        n.textContent = mostrado;
-        n.classList.remove('val-vacio');
+        n.textContent = mostrado; n.classList.remove("val-vacio");
       }
-    }
+    });
   }
+  function pintarTodo(){ CAMPOS.forEach(pintar); }
 
-  function pintarTodo(){ campos.forEach(pintar); }
+  document.querySelectorAll("[data-var]").forEach(function(n){
+    n.setAttribute("data-placeholder", n.textContent);
+  });
 
   function guardar(){
-    var data = {};
-    campos.forEach(function(id){ data[id] = document.getElementById(id).value; });
+    var data = datosFormulario();
     try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }catch(e){}
   }
-
   function cargar(){
     var data = {};
     try{ data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }catch(e){}
-    campos.forEach(function(id){
-      if(data[id] != null) document.getElementById(id).value = data[id];
-    });
-    // Fecha de la carta por defecto = hoy, si está vacía
-    var fa = document.getElementById('fecha_actual');
-    if(!fa.value){
-      var hoy = new Date();
-      fa.value = hoy.getFullYear()+"-"+String(hoy.getMonth()+1).padStart(2,'0')+"-"+String(hoy.getDate()).padStart(2,'0');
-    }
+    CAMPOS.forEach(function(id){ if(data[id]!=null) document.getElementById(id).value = data[id]; });
+    var fa = document.getElementById("fecha_actual");
+    if(!fa.value) fa.value = hoyISO();
   }
 
-  // Guardar placeholders originales para restaurarlos al vaciar
-  document.querySelectorAll('[data-var]').forEach(function(n){
-    n.setAttribute('data-placeholder', n.textContent);
+  CAMPOS.forEach(function(id){
+    document.getElementById(id).addEventListener("input", function(){ pintar(id); guardar(); });
   });
 
-  // Listeners
-  campos.forEach(function(id){
-    document.getElementById(id).addEventListener('input', function(){
-      pintar(id); guardar();
+  // Corrección ortográfica al salir del campo (también para texto escrito a mano)
+  var CAMPOS_NOMBRE = ["empresa","ciudad","nombre_deudor","firmante_nombre","firmante_cargo"];
+  CAMPOS_NOMBRE.forEach(function(id){
+    document.getElementById(id).addEventListener("blur", function(){
+      if(this.value.trim()){ this.value = tituloPropio(this.value); pintar(id); guardar(); }
     });
   });
-
-  document.getElementById('btnPdf').addEventListener('click', function(){
-    window.print();
+  document.getElementById("direccion").addEventListener("blur", function(){
+    if(this.value.trim()){ this.value = capFirst(this.value); pintar("direccion"); guardar(); }
   });
 
-  document.getElementById('btnLimpiar').addEventListener('click', function(){
-    if(!confirm('¿Limpiar todos los campos?')) return;
-    campos.forEach(function(id){ document.getElementById(id).value = ""; });
+  /* ===================== Dictado por voz ===================== */
+  function correccionVoz(id, texto){
+    texto = String(texto||"").replace(/[.,;:!?]+$/,"").trim();
+    if(CAMPOS_NOMBRE.indexOf(id)>=0) return tituloPropio(texto);
+    if(id==="direccion") return capFirst(texto);
+    if(id==="monto" || id==="dias_mora" || id==="cedula") return soloDigitos(texto);
+    return texto;
+  }
+
+  function setupVoz(){
+    var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    var soporta = !!SR;
+
+    var fields = CAMPOS.filter(function(id){ return id!=="fecha_limite" && id!=="fecha_actual"; });
+
+    // Crear los botones de micrófono primero (con o sin soporte)
+    fields.forEach(function(id){
+      var inp = document.getElementById(id);
+      var wrap = document.createElement("div"); wrap.className = "input-voz";
+      inp.parentNode.insertBefore(wrap, inp); wrap.appendChild(inp);
+      var btn = document.createElement("button");
+      btn.type = "button"; btn.className = "mic"; btn.innerHTML = "🎤";
+      if(!soporta){
+        btn.disabled = true; btn.style.opacity = ".4"; btn.style.cursor = "default";
+        btn.title = "Dictado no disponible — usa Chrome o Edge";
+      } else {
+        btn.title = "Dictar por voz (el permiso se pide solo la primera vez)";
+      }
+      wrap.appendChild(btn);
+    });
+
+    if(!soporta) return;
+
+    // UNA SOLA instancia global. Chrome pide permiso la primera vez que se llama
+    // a .start(); todas las siguientes llamadas sobre la misma instancia no vuelven a pedir.
+    var rec = new SR();
+    rec.lang = "es-CO"; rec.interimResults = false; rec.maxAlternatives = 1;
+
+    var campoActivo = null;
+    var btnActivo   = null;
+    var pendingFn   = null; // se ejecuta cuando onend dispara tras un abort()
+
+    function iniciar(inp, btn){
+      campoActivo = inp; btnActivo = btn;
+      btn.classList.add("listening");
+      try{ rec.start(); }catch(e){ btn.classList.remove("listening"); campoActivo = null; btnActivo = null; }
+    }
+
+    rec.onresult = function(ev){
+      if(!campoActivo) return;
+      var txt = ev.results[0][0].transcript;
+      campoActivo.value = correccionVoz(campoActivo.id, txt);
+      campoActivo.dispatchEvent(new Event("input"));
+    };
+    rec.onerror = function(){
+      if(btnActivo) btnActivo.classList.remove("listening");
+      btnActivo = null; campoActivo = null;
+    };
+    rec.onend = function(){
+      if(btnActivo) btnActivo.classList.remove("listening");
+      btnActivo = null; campoActivo = null;
+      if(pendingFn){ var fn = pendingFn; pendingFn = null; setTimeout(fn, 80); }
+    };
+
+    fields.forEach(function(id){
+      var inp = document.getElementById(id);
+      // El botón ya fue insertado arriba; lo buscamos por ser el último hijo del wrap
+      var btn = inp.parentNode.querySelector(".mic");
+
+      btn.addEventListener("click", function(){
+        if(btnActivo === btn){
+          // Detener el campo activo
+          try{ rec.stop(); }catch(e){}
+          return;
+        }
+        if(btnActivo){
+          // Cambiar a otro campo: abortar el actual y arrancar este cuando termine
+          pendingFn = function(){ iniciar(inp, btn); };
+          btnActivo.classList.remove("listening");
+          try{ rec.abort(); }catch(e){}
+          return;
+        }
+        iniciar(inp, btn);
+      });
+    });
+  }
+
+  /* ===================== Generación del PDF (jsPDF) ===================== */
+  function val(v, fb){ return (v==null || String(v).trim()==="") ? (fb||"") : String(v).trim(); }
+
+  function renderCartaPDF(d){
+    var jsPDF = window.jspdf.jsPDF;
+    var doc = new jsPDF({unit:"mm", format:"a4"});
+    var pageW = 210, margin = 20, x = margin, right = pageW - margin, maxW = pageW - margin*2;
+    var y = 24, lineH = 6, paraGap = 4;
+
+    // Membrete
+    doc.setFont("helvetica","bold"); doc.setFontSize(15); doc.setTextColor(31,58,95);
+    doc.text(val(d.empresa,"Empresa"), right, y, {align:"right"}); y += 6;
+    doc.setFont("helvetica","normal"); doc.setFontSize(9); doc.setTextColor(90);
+    doc.text("NIT "+val(d.nit,"———")+"   ·   Tel. "+val(d.telefono,"———"), right, y, {align:"right"}); y += 4.5;
+    if(val(d.direccion,"")){ doc.text(val(d.direccion,""), right, y, {align:"right"}); y += 4; }
+    y += 2;
+    doc.setDrawColor(31,58,95); doc.setLineWidth(0.6); doc.line(margin, y, right, y); y += 11;
+
+    // Fecha + destinatario
+    doc.setFont("times","normal"); doc.setFontSize(11); doc.setTextColor(20);
+    doc.text(val(d.ciudad,"Ciudad")+", "+fmtFechaLarga(d.fecha_actual), x, y); y += 11;
+    doc.text("Señor(a)", x, y); y += 5.5;
+    doc.setFont("times","bold"); doc.text(val(d.nombre_deudor,"Deudor"), x, y); y += 5.5;
+    doc.setFont("times","normal"); doc.text("C.C. No. "+val(d.cedula,"———"), x, y); y += 11;
+
+    // Asunto
+    doc.setFont("times","bold");
+    var asunto = doc.splitTextToSize("Asunto: Requerimiento de pago — Obligación No. "+val(d.num_obligacion,"———"), maxW);
+    asunto.forEach(function(l){ doc.text(l, x, y); y += lineH; }); y += paraGap;
+
+    // Cuerpo
+    doc.setFont("times","normal"); doc.setFontSize(11);
+    function parrafo(txt){
+      doc.splitTextToSize(txt, maxW).forEach(function(l){ doc.text(l, x, y); y += lineH; });
+      y += paraGap;
+    }
+    parrafo("Reciba un cordial saludo. Por medio de la presente nos permitimos informarle que, a la fecha, usted registra una obligación pendiente con "+val(d.empresa,"la entidad")+" por valor de "+fmtMoneda(d.monto)+", la cual presenta una mora de "+val(d.dias_mora,"———")+" días.");
+    parrafo("Le solicitamos realizar el pago total de la suma adeudada a más tardar el "+fmtFechaLarga(d.fecha_limite)+", con el fin de evitar el reporte ante centrales de riesgo y/o el inicio de acciones de cobro adicionales.");
+    parrafo("En caso de haber realizado el pago, por favor hacer caso omiso a esta comunicación.");
+    parrafo("Atentamente,");
+
+    // Firma
+    y += 14;
+    doc.setDrawColor(60); doc.setLineWidth(0.2); doc.line(x, y, x+70, y); y += 5;
+    doc.setFont("times","bold"); doc.setFontSize(11); doc.setTextColor(20);
+    doc.text(val(d.firmante_nombre,"Firmante"), x, y); y += 5;
+    doc.setFont("times","normal"); doc.setFontSize(10); doc.setTextColor(90);
+    doc.text(val(d.firmante_cargo,"Cargo"), x, y); y += 4.5;
+    doc.text(val(d.empresa,"Empresa")+" — NIT "+val(d.nit,"———"), x, y);
+
+    return doc;
+  }
+  function nombrePDF(d){ return "Carta_"+slug(d.nombre_deudor||"deudor")+(d.cedula?"_"+slug(d.cedula):"")+".pdf"; }
+
+  function checkLibs(){
+    return !!(window.jspdf && window.jspdf.jsPDF);
+  }
+
+  // Descargar PDF individual
+  document.getElementById("btnPdf").addEventListener("click", function(){
+    if(!checkLibs()){ alert("No se pudo cargar el generador de PDF. Verifica tu conexión a internet."); return; }
+    var d = datosFormulario();
+    renderCartaPDF(d).save(nombrePDF(d));
+  });
+
+  document.getElementById("btnLimpiar").addEventListener("click", function(){
+    if(!confirm("¿Limpiar todos los campos?")) return;
+    CAMPOS.forEach(function(id){ document.getElementById(id).value = ""; });
     try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
-    cargar();      // restablece la fecha de hoy
-    pintarTodo();
+    cargar(); pintarTodo();
   });
 
-  // Init
+  /* ===================== Modo masivo (Excel) ===================== */
+  var ALIAS = {
+    "empresa":"empresa","razon social":"empresa",
+    "nit":"nit",
+    "telefono":"telefono","tel":"telefono","celular":"telefono",
+    "direccion":"direccion","dir":"direccion",
+    "ciudad":"ciudad",
+    "nombre del deudor":"nombre_deudor","nombre":"nombre_deudor","deudor":"nombre_deudor","nombre completo":"nombre_deudor",
+    "cedula":"cedula","documento":"cedula","cc":"cedula","identificacion":"cedula","no documento":"cedula",
+    "no obligacion":"num_obligacion","numero de obligacion":"num_obligacion","no de obligacion":"num_obligacion","obligacion":"num_obligacion","referencia":"num_obligacion","credito":"num_obligacion",
+    "monto":"monto","valor":"monto","valor deuda":"monto","deuda":"monto","saldo":"monto","monto de la deuda":"monto",
+    "dias en mora":"dias_mora","dias mora":"dias_mora","mora":"dias_mora","dias":"dias_mora",
+    "fecha limite":"fecha_limite","fecha limite de pago":"fecha_limite","vencimiento":"fecha_limite",
+    "fecha carta":"fecha_actual","fecha":"fecha_actual","fecha de la carta":"fecha_actual",
+    "firmante":"firmante_nombre","nombre firmante":"firmante_nombre","firma":"firmante_nombre",
+    "cargo":"firmante_cargo","cargo firmante":"firmante_cargo"
+  };
+  function normHeader(h){
+    return String(h||"").normalize("NFD").replace(/[̀-ͯ]/g,"")
+            .toLowerCase().replace(/[._]/g," ").replace(/\s+/g," ").trim();
+  }
+  function mapearFila(obj){
+    var d = {};
+    Object.keys(obj).forEach(function(k){
+      var campo = ALIAS[normHeader(k)];
+      if(campo){
+        var v = obj[k];
+        if(campo==="fecha_limite" || campo==="fecha_actual") v = toISO(v);
+        d[campo] = (v==null) ? "" : v;
+      }
+    });
+    ["nombre_deudor","ciudad","firmante_nombre"].forEach(function(c){
+      if(d[c]) d[c] = tituloPropio(d[c]);
+    });
+    return d;
+  }
+  function conDefaults(row){
+    var base = datosFormulario();
+    var out = {}; CAMPOS.forEach(function(c){ out[c] = base[c] || ""; });
+    Object.keys(row).forEach(function(k){
+      if(row[k]!=="" && row[k]!=null) out[k] = row[k];
+    });
+    if(!out.fecha_actual) out.fecha_actual = hoyISO();
+    return out;
+  }
+
+  var registros = [];
+
+  function pintarTabla(){
+    var wrap = document.getElementById("tablaWrap");
+    var resumen = document.getElementById("resumen");
+    var acciones = document.getElementById("accionesMasivo");
+    if(!registros.length){ wrap.innerHTML=""; resumen.innerHTML=""; acciones.style.display="none"; return; }
+
+    var validos = registros.filter(function(r){ return r.__valido; }).length;
+    var malos = registros.length - validos;
+    resumen.innerHTML = '<span class="badge badge-ok">'+validos+' válidos</span>' +
+        (malos ? '<span class="badge badge-warn">'+malos+' sin nombre (se omiten)</span>' : '') +
+        ' Total cargados: '+registros.length;
+    acciones.style.display = validos ? "flex" : "none";
+
+    var html = '<table class="tabla"><thead><tr><th>#</th><th>Deudor</th><th>Cédula</th><th>Monto</th><th>Mora</th><th>PDF</th></tr></thead><tbody>';
+    registros.forEach(function(r, i){
+      var d = r.datos;
+      html += '<tr class="'+(r.__valido?"":"fila-mala")+'">' +
+        '<td>'+(i+1)+'</td>' +
+        '<td>'+(d.nombre_deudor||'<em>(sin nombre)</em>')+'</td>' +
+        '<td>'+(d.cedula||'—')+'</td>' +
+        '<td>'+(d.monto?fmtMoneda(d.monto):'—')+'</td>' +
+        '<td>'+(d.dias_mora||'—')+'</td>' +
+        '<td>'+(r.__valido?'<button type="button" class="btn-sec mini" data-row="'+i+'">PDF</button>':'—')+'</td>' +
+      '</tr>';
+    });
+    html += '</tbody></table>';
+    wrap.innerHTML = html;
+    wrap.querySelectorAll("button[data-row]").forEach(function(b){
+      b.addEventListener("click", function(){
+        var i = +b.getAttribute("data-row");
+        var d = conDefaults(registros[i].datos);
+        renderCartaPDF(d).save(nombrePDF(d));
+      });
+    });
+  }
+
+  function procesarLibro(workbook){
+    var ws = workbook.Sheets[workbook.SheetNames[0]];
+    var filas = XLSX.utils.sheet_to_json(ws, {defval:"", raw:false, dateNF:"yyyy-mm-dd"});
+    registros = filas.map(function(f){
+      var datos = mapearFila(f);
+      return { datos: datos, __valido: !!(datos.nombre_deudor && String(datos.nombre_deudor).trim()) };
+    });
+    pintarTabla();
+  }
+
+  document.getElementById("archivo").addEventListener("change", function(ev){
+    var file = ev.target.files[0]; if(!file) return;
+    if(typeof XLSX === "undefined"){ alert("No se pudo cargar el lector de Excel. Verifica tu conexión a internet."); return; }
+    var reader = new FileReader();
+    reader.onload = function(e){
+      try{
+        var wb = XLSX.read(new Uint8Array(e.target.result), {type:"array", cellDates:true});
+        procesarLibro(wb);
+        document.getElementById("btnLimpiarArchivo").style.display = "";
+        document.getElementById("progreso").textContent = "";
+      }catch(err){
+        alert("No se pudo leer el archivo. Asegúrate de que sea un Excel (.xlsx/.xls) o CSV válido.");
+      }
+    };
+    reader.readAsArrayBuffer(file);
+  });
+
+  document.getElementById("btnLimpiarArchivo").addEventListener("click", function(){
+    registros = [];
+    document.getElementById("archivo").value = "";
+    this.style.display = "none";
+    document.getElementById("progreso").textContent = "";
+    pintarTabla();
+  });
+
+  // Plantilla descargable
+  document.getElementById("btnPlantilla").addEventListener("click", function(){
+    if(typeof XLSX === "undefined"){ alert("No se pudo cargar el generador de Excel. Verifica tu conexión a internet."); return; }
+    var encabezados = ["Empresa","NIT","Telefono","Direccion","Ciudad","Nombre del deudor","Cedula",
+                       "No Obligacion","Monto","Dias en mora","Fecha limite","Fecha carta","Firmante","Cargo"];
+    var ejemplo = ["Cobranzas del Valle S.A.S.","900.123.456-7","(602) 555 1234","Calle 10 # 5-25","Cali",
+                   "Juan Pérez Gómez","1.234.567.890","OBL-2026-0048","1250000","45","2026-07-15","2026-06-26",
+                   "María López","Coordinadora de Cartera"];
+    var ws = XLSX.utils.aoa_to_sheet([encabezados, ejemplo]);
+    ws["!cols"] = encabezados.map(function(){ return {wch:18}; });
+    var wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Deudores");
+    XLSX.writeFile(wb, "plantilla_atria.xlsx");
+  });
+
+  // Descargar TODOS los PDF en un .zip
+  document.getElementById("btnZip").addEventListener("click", function(){
+    if(!checkLibs()){
+      alert("La librería de PDF no está disponible. Verifica tu conexión a internet y recarga la página."); return;
+    }
+    if(typeof JSZip === "undefined"){
+      alert("La librería ZIP no está disponible. Verifica tu conexión a internet y recarga la página."); return;
+    }
+    var validos = registros.filter(function(r){ return r.__valido; });
+    if(!validos.length){ alert("No hay registros válidos para generar."); return; }
+
+    var btn = this; btn.disabled = true;
+    var prog = document.getElementById("progreso");
+    var zip = new JSZip();
+    var usados = {};
+    var errores = 0;
+
+    var i = 0;
+    function paso(){
+      if(i >= validos.length){
+        var total = validos.length - errores;
+        prog.textContent = "Comprimiendo " + total + " archivos…";
+        zip.generateAsync({type:"blob"}).then(function(content){
+          descargarBlob(content, "cartas_atria_"+hoyISO()+".zip");
+          prog.textContent = "✅ Listo: " + total + " PDF generados" +
+            (errores ? " (" + errores + " con error, revisa la consola)" : "") + ".";
+          btn.disabled = false;
+        }).catch(function(e){
+          prog.textContent = "❌ Error al comprimir: " + e.message;
+          btn.disabled = false;
+        });
+        return;
+      }
+      var d = conDefaults(validos[i].datos);
+      var baseNombre = nombrePDF(d);
+      var nombre = baseNombre;
+      if(usados[baseNombre]){ nombre = baseNombre.replace(/\.pdf$/, "_"+(usados[baseNombre]+1)+".pdf"); }
+      usados[baseNombre] = (usados[baseNombre]||0) + 1;
+      try{
+        zip.file(nombre, renderCartaPDF(d).output("arraybuffer"));
+      }catch(e){
+        errores++;
+        console.error("Error generando PDF para:", d.nombre_deudor, e);
+      }
+      i++;
+      prog.textContent = "Generando PDF " + i + " de " + validos.length + "…";
+      setTimeout(paso, 0);
+    }
+    paso();
+  });
+
+  /* ===================== Init ===================== */
+  setupVoz();
   cargar();
   pintarTodo();
 })();
