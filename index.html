@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atria — Generador de Cartas de Cobranza (Beta)</title>
+<style>
+  :root{
+    --azul:#1f3a5f;
+    --azul-claro:#2c5282;
+    --gris:#f4f5f7;
+    --borde:#d7dbe0;
+    --texto:#2d3340;
+    --serif:Georgia,'Times New Roman',serif;
+    --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:var(--sans);
+    color:var(--texto);
+    background:#e9ecf1;
+  }
+  .barra{
+    background:var(--azul);
+    color:#fff;
+    padding:14px 24px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .barra h1{font-size:18px;margin:0;font-weight:600}
+  .barra .beta{
+    font-size:11px;background:#ffb020;color:#3a2a00;
+    padding:2px 8px;border-radius:10px;font-weight:700;letter-spacing:.5px;
+  }
+  .layout{
+    display:grid;
+    grid-template-columns:380px 1fr;
+    gap:24px;
+    padding:24px;
+    align-items:start;
+  }
+  /* ---------- Formulario ---------- */
+  .panel{
+    background:#fff;
+    border:1px solid var(--borde);
+    border-radius:10px;
+    padding:20px;
+  }
+  .panel h2{
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:.6px;
+    color:var(--azul-claro);
+    margin:0 0 12px;
+    border-bottom:2px solid var(--gris);
+    padding-bottom:6px;
+  }
+  fieldset{
+    border:none;margin:0 0 18px;padding:0;
+  }
+  fieldset legend{
+    font-size:12px;font-weight:700;color:var(--azul);
+    text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;
+    width:100%;border-bottom:1px solid var(--borde);padding-bottom:5px;
+  }
+  .campo{margin-bottom:12px}
+  .campo label{display:block;font-size:12px;font-weight:600;margin-bottom:4px;color:#4a5160}
+  .campo input{
+    width:100%;padding:9px 10px;font-size:14px;
+    border:1px solid var(--borde);border-radius:6px;font-family:var(--sans);
+    transition:border-color .15s,box-shadow .15s;
+  }
+  .campo input:focus{
+    outline:none;border-color:var(--azul-claro);
+    box-shadow:0 0 0 3px rgba(44,82,130,.15);
+  }
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .acciones{display:flex;gap:10px;margin-top:8px}
+  button{
+    flex:1;padding:11px;font-size:14px;font-weight:600;
+    border:none;border-radius:6px;cursor:pointer;font-family:var(--sans);
+    transition:background .15s,opacity .15s;
+  }
+  .btn-pdf{background:var(--azul);color:#fff}
+  .btn-pdf:hover{background:var(--azul-claro)}
+  .btn-limpiar{background:#fff;color:#c0392b;border:1px solid #e3b8b3}
+  .btn-limpiar:hover{background:#fdf0ef}
+  .ayuda{font-size:11px;color:#8a93a2;margin-top:14px;line-height:1.5}
+  /* ---------- Vista previa / Documento ---------- */
+  .preview-wrap{
+    display:flex;justify-content:center;
+  }
+  .documento{
+    background:#fff;
+    width:100%;
+    max-width:794px;            /* ~A4 a 96dpi */
+    min-height:1123px;
+    padding:64px 72px;
+    box-shadow:0 4px 24px rgba(0,0,0,.12);
+    font-family:var(--serif);
+    font-size:15px;
+    line-height:1.7;
+    color:#1a1a1a;
+  }
+  .doc-membrete{
+    text-align:right;border-bottom:2px solid var(--azul);
+    padding-bottom:10px;margin-bottom:28px;
+  }
+  .doc-membrete .emp{font-size:20px;font-weight:bold;color:var(--azul);font-family:var(--sans)}
+  .doc-membrete .sub{font-size:12px;color:#555;font-family:var(--sans)}
+  .doc-fecha{margin-bottom:24px}
+  .doc-dest{margin-bottom:20px}
+  .doc-dest strong{font-weight:bold}
+  .doc-asunto{margin-bottom:20px;font-weight:bold}
+  .doc-cuerpo p{margin:0 0 16px}
+  .doc-firma{margin-top:48px}
+  .doc-firma .linea{border-top:1px solid #333;width:260px;padding-top:6px}
+  .doc-firma .nom{font-weight:bold}
+  .doc-firma .cargo{font-size:13px;color:#555}
+  .doc-firma .ent{font-size:13px;color:#555;margin-top:2px;font-family:var(--sans)}
+  .val-vacio{color:#b9bfca;font-style:italic}
+  /* ---------- Impresión / PDF ---------- */
+  @page{size:A4;margin:18mm}
+  @media print{
+    body{background:#fff}
+    .barra,.col-form,.ayuda{display:none !important}
+    .layout{display:block;padding:0}
+    .preview-wrap{display:block}
+    .documento{
+      box-shadow:none;max-width:none;width:100%;
+      min-height:0;padding:0;
+    }
+  }
+  /* ---------- Responsive ---------- */
+  @media (max-width:900px){
+    .layout{grid-template-columns:1fr}
+    .documento{padding:40px 32px;min-height:0}
+  }
+</style>
+</head>
+<body>
+  <div class="barra">
+    <h1>Atria · Generador de Cartas de Cobranza</h1>
+    <span class="beta">BETA</span>
+  </div>
+
+  <div class="layout">
+    <!-- ================= FORMULARIO ================= -->
+    <div class="col-form">
+      <div class="panel">
+        <h2>Datos del documento</h2>
+        <form id="form" autocomplete="off">
+          <fieldset>
+            <legend>Entidad / Acreedor</legend>
+            <div class="campo">
+              <label for="empresa">Nombre de la empresa</label>
+              <input type="text" id="empresa" placeholder="Ej. Cobranzas del Valle S.A.S.">
+            </div>
+            <div class="row">
+              <div class="campo">
+                <label for="nit">NIT</label>
+                <input type="text" id="nit" placeholder="900.123.456-7">
+              </div>
+              <div class="campo">
+                <label for="telefono">Teléfono</label>
+                <input type="text" id="telefono" placeholder="(602) 555 1234">
+              </div>
+            </div>
+            <div class="campo">
+              <label for="direccion">Dirección</label>
+              <input type="text" id="direccion" placeholder="Calle 10 # 5-25, Oficina 301">
+            </div>
+            <div class="campo">
+              <label for="ciudad">Ciudad de emisión</label>
+              <input type="text" id="ciudad" placeholder="Cali">
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Deudor</legend>
+            <div class="campo">
+              <label for="nombre_deudor">Nombre completo</label>
+              <input type="text" id="nombre_deudor" placeholder="Juan Pérez Gómez">
+            </div>
+            <div class="campo">
+              <label for="cedula">Número de cédula</label>
+              <input type="text" id="cedula" placeholder="1.234.567.890">
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Obligación</legend>
+            <div class="campo">
+              <label for="num_obligacion">No. de obligación / referencia</label>
+              <input type="text" id="num_obligacion" placeholder="OBL-2026-0048">
+            </div>
+            <div class="row">
+              <div class="campo">
+                <label for="monto">Monto de la deuda (COP)</label>
+                <input type="number" id="monto" min="0" step="1000" placeholder="1250000">
+              </div>
+              <div class="campo">
+                <label for="dias_mora">Días en mora</label>
+                <input type="number" id="dias_mora" min="0" step="1" placeholder="45">
+              </div>
+            </div>
+            <div class="campo">
+              <label for="fecha_limite">Fecha límite de pago</label>
+              <input type="date" id="fecha_limite">
+            </div>
+            <div class="campo">
+              <label for="fecha_actual">Fecha de la carta</label>
+              <input type="date" id="fecha_actual">
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Firmante</legend>
+            <div class="campo">
+              <label for="firmante_nombre">Nombre</label>
+              <input type="text" id="firmante_nombre" placeholder="María López">
+            </div>
+            <div class="campo">
+              <label for="firmante_cargo">Cargo</label>
+              <input type="text" id="firmante_cargo" placeholder="Coordinadora de Cartera">
+            </div>
+          </fieldset>
+
+          <div class="acciones">
+            <button type="button" class="btn-pdf" id="btnPdf">⬇ Descargar PDF</button>
+            <button type="button" class="btn-limpiar" id="btnLimpiar">Limpiar</button>
+          </div>
+          <p class="ayuda">
+            En el diálogo de impresión elige <strong>“Guardar como PDF”</strong> como destino.
+            Tus datos se guardan automáticamente en este navegador.
+          </p>
+        </form>
+      </div>
+    </div>
+
+    <!-- ================= VISTA PREVIA ================= -->
+    <div class="preview-wrap">
+      <div class="documento" id="documento">
+        <div class="doc-membrete">
+          <div class="emp" data-var="empresa">Nombre de la empresa</div>
+          <div class="sub">NIT <span data-var="nit">———</span> · Tel. <span data-var="telefono">———</span></div>
+          <div class="sub" data-var="direccion">Dirección</div>
+        </div>
+
+        <div class="doc-fecha"><span data-var="ciudad">Ciudad</span>, <span data-var="fecha_actual">———</span></div>
+
+        <div class="doc-dest">
+          Señor(a)<br>
+          <strong data-var="nombre_deudor">Nombre del deudor</strong><br>
+          C.C. No. <span data-var="cedula">———</span>
+        </div>
+
+        <div class="doc-asunto">Asunto: Requerimiento de pago — Obligación No. <span data-var="num_obligacion">———</span></div>
+
+        <div class="doc-cuerpo">
+          <p>Reciba un cordial saludo. Por medio de la presente nos permitimos informarle
+          que, a la fecha, usted registra una obligación pendiente con
+          <span data-var="empresa">la entidad</span> por valor de
+          <strong data-var="monto">$ ———</strong>, la cual presenta una mora de
+          <strong data-var="dias_mora">———</strong> días.</p>
+
+          <p>Le solicitamos realizar el pago total de la suma adeudada a más tardar el
+          <strong data-var="fecha_limite">———</strong>, con el fin de evitar el reporte ante
+          centrales de riesgo y/o el inicio de acciones de cobro adicionales.</p>
+
+          <p>En caso de haber realizado el pago, por favor hacer caso omiso a esta comunicación.</p>
+
+          <p>Atentamente,</p>
+        </div>
+
+        <div class="doc-firma">
+          <div class="linea">
+            <div class="nom" data-var="firmante_nombre">Nombre del firmante</div>
+            <div class="cargo" data-var="firmante_cargo">Cargo</div>
+            <div class="ent"><span data-var="empresa">Empresa</span> — NIT <span data-var="nit">———</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+(function(){
+  "use strict";
+  var STORAGE_KEY = "cartaCobranzaBeta_v1";
+  var campos = ["empresa","nit","telefono","direccion","ciudad",
+                "nombre_deudor","cedula","num_obligacion","monto","dias_mora",
+                "fecha_limite","fecha_actual","firmante_nombre","firmante_cargo"];
+
+  var fmtMoneda = new Intl.NumberFormat('es-CO',{style:'currency',currency:'COP',maximumFractionDigits:0});
+
+  function formatearFechaLarga(iso){
+    if(!iso) return "";
+    // iso = "YYYY-MM-DD" -> evitar desfase de zona horaria usando UTC
+    var p = iso.split("-");
+    if(p.length!==3) return iso;
+    var d = new Date(Date.UTC(+p[0], +p[1]-1, +p[2]));
+    return d.toLocaleDateString('es-CO',{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'});
+  }
+
+  function valorMostrado(id, raw){
+    if(raw === "" || raw == null) return null;       // null => placeholder
+    if(id === "monto"){
+      var n = Number(raw);
+      return isNaN(n) ? raw : fmtMoneda.format(n);
+    }
+    if(id === "fecha_limite" || id === "fecha_actual"){
+      return formatearFechaLarga(raw);
+    }
+    return raw;
+  }
+
+  function pintar(id){
+    var input = document.getElementById(id);
+    var mostrado = valorMostrado(id, input.value);
+    var nodos = document.querySelectorAll('[data-var="'+id+'"]');
+    for(var i=0;i<nodos.length;i++){
+      var n = nodos[i];
+      if(mostrado === null){
+        n.textContent = n.getAttribute('data-placeholder') || n.textContent;
+        n.classList.add('val-vacio');
+      }else{
+        n.textContent = mostrado;
+        n.classList.remove('val-vacio');
+      }
+    }
+  }
+
+  function pintarTodo(){ campos.forEach(pintar); }
+
+  function guardar(){
+    var data = {};
+    campos.forEach(function(id){ data[id] = document.getElementById(id).value; });
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  function cargar(){
+    var data = {};
+    try{ data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }catch(e){}
+    campos.forEach(function(id){
+      if(data[id] != null) document.getElementById(id).value = data[id];
+    });
+    // Fecha de la carta por defecto = hoy, si está vacía
+    var fa = document.getElementById('fecha_actual');
+    if(!fa.value){
+      var hoy = new Date();
+      fa.value = hoy.getFullYear()+"-"+String(hoy.getMonth()+1).padStart(2,'0')+"-"+String(hoy.getDate()).padStart(2,'0');
+    }
+  }
+
+  // Guardar placeholders originales para restaurarlos al vaciar
+  document.querySelectorAll('[data-var]').forEach(function(n){
+    n.setAttribute('data-placeholder', n.textContent);
+  });
+
+  // Listeners
+  campos.forEach(function(id){
+    document.getElementById(id).addEventListener('input', function(){
+      pintar(id); guardar();
+    });
+  });
+
+  document.getElementById('btnPdf').addEventListener('click', function(){
+    window.print();
+  });
+
+  document.getElementById('btnLimpiar').addEventListener('click', function(){
+    if(!confirm('¿Limpiar todos los campos?')) return;
+    campos.forEach(function(id){ document.getElementById(id).value = ""; });
+    try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
+    cargar();      // restablece la fecha de hoy
+    pintarTodo();
+  });
+
+  // Init
+  cargar();
+  pintarTodo();
+})();
+</script>
+</body>
+</html>
